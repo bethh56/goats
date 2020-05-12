@@ -14,12 +14,18 @@ class App extends React.Component {
     this.setState({ goats });
   }
 
+  useAGoat = (goatId) => {
+    goatData.useGoat(goatId);
+    const goats = goatData.getGoats();
+    this.setState({ goats });
+  }
+
   render() {
     // inside the render - anything we need to do to modify the UI
     return (
       <div className="App">
         <h1 className="goat-title m-3 p-2">GOAT YOGA LTD</h1>
-        <GoatCoral goats={this.state.goats}/>
+        <GoatCoral goats={this.state.goats} useAGoat={this.useAGoat}/>
       </div>
     );
   }
