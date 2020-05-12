@@ -1,7 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import goatShape from '../../helpers/propz/goatShape'
 import './Goat.scss';
 
 class Goat extends React.Component {
+  static propTypes = {
+    useAGoat: PropTypes.func.isRequired,
+    freeAGoat: PropTypes.func.isRequired,
+    goat: goatShape.goatShape,
+  }
 
   useGoatEvent = (e) => {
     const { goat, useAGoat } = this.props;
@@ -9,8 +16,15 @@ class Goat extends React.Component {
     useAGoat(goat.id);
   }
 
+  freeGoatEvent = (e) => {
+    e.preventDefault();
+    const { goat, freeAGoat } = this.props;
+    freeAGoat(goat.id);
+  }
+
   render() {
     const { goat } = this.props;
+
     return (
       <div className="Goat col-3">
         <div className="card">
@@ -18,9 +32,15 @@ class Goat extends React.Component {
           <div className="card-body">
             <h5 className="card-title">{goat.name}</h5>
             <p className="card-text">Beard Length: {goat.beardLength}</p>
-            <div className="card-footer">
-            <button className="btn btn-dark" id='useTheGoatButton' onClick={this.useGoatEvent}>Use The Goat</button>
-            </div>
+          </div>
+          <div className="card-footer">
+            {
+              goat.isBusy ? (
+                <button className="btn btn-danger" onClick={this.freeGoatEvent}>Free the Goat</button>
+              ) : (
+                <button className="btn btn-dark" onClick={this.useGoatEvent}>Use the Goat</button>
+              )
+            }
           </div>
         </div>
       </div>
